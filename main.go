@@ -10,11 +10,16 @@ import (
 const (
 	TCP       = "tcp"
 	CONN_HOST = "localhost"
-	CONN_PORT = "3333"
 )
 
 func main() {
-	serverAddr := CONN_HOST + ":" + CONN_PORT
+	//read port
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Port: ")
+	port, err := reader.ReadString('\n')
+	port = strings.TrimSpace(port)
+
+	serverAddr := CONN_HOST + ":" + port
 	tcpAddr, err := net.ResolveTCPAddr(TCP, serverAddr)
 	if err != nil {
 		fmt.Printf("Resolve address failed on %s\n", serverAddr)
